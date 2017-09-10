@@ -14,14 +14,14 @@
 			<form name="myForm">
 				Player 1:<br><input type="text" id="player1Name" value="Player1">
   				<br>
-						<fieldset>
-								<legend>Pick Player:</legend>
+						<div id="letterChooser">
+								Pick Letter:<br />
 							<input type="radio" name="player" value="x" > X<br>
 		  				<input type="radio" name="player" value="o" checked> O<br>
-						</fieldset>
+						</div>
   			Player 2:<br><input type="text" id="player2Name" value="Player2">
 					<br>
-	    	<a href="#" class="button" id="start-button">Start game</a>
+	    	<a href="#" class="button" type="submit" onclick="start(this)" id="startButton">Start game</a>
 			</form>
 	  </header>
 	</div>
@@ -47,15 +47,15 @@
     </ul>
   </header>
   <ul class="boxes">
-    <li class="box" id="box-0"></li>
-    <li class="box" id="box-1"></li>
-    <li class="box" id="box-2"></li>
-    <li class="box" id="box-3"></li>
-    <li class="box" id="box-4"></li>
-    <li class="box" id="box-5"></li>
-    <li class="box" id="box-6"></li>
-    <li class="box" id="box-7"></li>
-    <li class="box" id="box-8"></li>
+    <li class="box" id="box-0" onclick="turn(this)"></li>
+    <li class="box" id="box-1" onclick="turn(this)"></li>
+    <li class="box" id="box-2" onclick="turn(this)"></li>
+    <li class="box" id="box-3" onclick="turn(this)"></li>
+    <li class="box" id="box-4" onclick="turn(this)"></li>
+    <li class="box" id="box-5" onclick="turn(this)"></li>
+    <li class="box" id="box-6" onclick="turn(this)"></li>
+    <li class="box" id="box-7" onclick="turn(this)"></li>
+    <li class="box" id="box-8" onclick="turn(this)"></li>
   </ul>
 </div>
 <div class="screen screen-win" id="finish">

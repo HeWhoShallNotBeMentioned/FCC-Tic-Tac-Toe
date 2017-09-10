@@ -1,59 +1,106 @@
 (function() {
   "use strict";
 
-  var player1Val = "";
+  var player1Val = "ddd";
+  var player2Val = "eee";
+  var playerTurn = "111";
+  var boardArray1 = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
+  window.turn = turn;
+  window.startButton = startButton;
+  window.start = start;
+  window.myForm = myForm;
 
-  var game = {
-    init: function() {
-      console.log("inside game.init");
-      var hideFinish = document.getElementById('finish');
-      hideFinish.style.display = 'none';
-      var hideBoard = document.getElementById('board');
-      hideBoard.style.display = 'none';
-    },
 
-    start: function() {
-      var clickStartButton = document.getElementById('start-button');
-      clickStartButton.addEventListener("click", function (){
+   function start () {
+      var clickStartButton = document.getElementById('startButton');
+      clickStartButton.addEventListener("click", function (event){
         var hideBoard = document.getElementById('board');
         hideBoard.style.display = 'block';
         var hideStart = document.getElementById('start');
         hideStart.style.display = 'none';
-
-
-        //console.log("currentValue", currentValue);
-        // var player1Val = document.querySelector('input[name=player][checked]').value;
+        player1Val = document.querySelector('input[name=player][checked]').value;
         console.log("player1Val  ", player1Val);
         var playerNameGet1 = document.getElementById("player1Name").value;
         var playerNameGet2 = document.getElementById("player2Name").value;
+        console.log("playerNameGet1  ", playerNameGet1);
+
         if (player1Val === "x") {
           document.getElementById("play1").innerHTML = playerNameGet2;
           document.getElementById("play2").innerHTML = playerNameGet1;
-        } else {
+          document.getElementById("player1").classList.add("active");
+          playerTurn = "o";
+
+          player2Val = "o";
+            //console.log("player1Val  ", player1Val);
+            //console.log("player2Val  ", player2Val);
+        } else if (player1Val === "o") {
           document.getElementById("play1").innerHTML = playerNameGet1;
           document.getElementById("play2").innerHTML = playerNameGet2;
-          player1Val = "o";
-          console.log("player1Val  ", player1Val);
+          document.getElementById("player1").classList.add("active");
+          playerTurn = "x";
+          //console.log("player1Val  ", player1Val);
+
+          player2Val = "x";
+          //console.log("player2Val  ", player2Val);
+        } else {
+          alert("not getting the playerVal1");
         }
       });
-    }
-  };
+}
 
-  var rad = document.myForm.player;
-  var prev = null;
-  for(var i = 0; i < rad.length; i++) {
-      rad[i].onclick = function() {
-          (prev)? console.log("prev.value  ", prev.value):null;
-          if(this !== prev) {
-              prev = this;
-          }
-          console.log("this.value  ",this.value);
-          player1Val = this.value;
-          return player1Val;
-      };
 
+   function init(){
+    console.log("inside game.init");
+    var hideFinish = document.getElementById('finish');
+    hideFinish.style.display = 'none';
+    var hideBoard = document.getElementById('board');
+    hideBoard.style.display = 'none';
   }
 
-  game.init();
-  game.start();
+  function turn (square) {
+    //square.classList.add("box-filled-x");
+    if (!square.classList.contains("box-filled-o")  && !square.classList.contains("box-filled-o")) {
+    console.log(square);
+    switchTurn(square);
+  } else {
+    alert("Pick another square.");
+  }
+  }
+
+  function switchTurn(square) {
+    console.log("inside switchTurn. playerTurn ", playerTurn);
+    console.log("inside switchTurn. player1Val ", player1Val);
+    console.log("inside switchTurn. player2Val ", player2Val);
+    if (playerTurn === "x" && player1Val === "x") {
+      document.getElementById("player1").classList.add("active");
+      document.getElementById("player2").classList.remove("active");
+      square.classList.add("box-filled-o");
+
+      playerTurn = "o";
+    } else if (playerTurn === "x" && player2Val === "x") {
+      document.getElementById("player2").classList.add("active");
+      document.getElementById("player1").classList.remove("active");
+      square.classList.add("box-filled-o");
+        playerTurn = "o";
+    } else if (playerTurn === "o" && player1Val === "o") {
+      document.getElementById("player1").classList.add("active");
+      document.getElementById("player2").classList.remove("active");
+      square.classList.add("box-filled-x");
+      playerTurn = "x";
+    } else if (playerTurn === "o" && player2Val === "o") {
+      document.getElementById("player2").classList.add("active");
+      document.getElementById("player1").classList.remove("active");
+      square.classList.add("box-filled-x");
+      playerTurn = "x";
+    } else {
+      alert("switchTurn has a problem");
+    }
+  }
+
+
+
+
+  init();
+  start();
+
 }());
