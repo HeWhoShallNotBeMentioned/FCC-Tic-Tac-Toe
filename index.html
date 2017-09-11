@@ -16,8 +16,8 @@
   				<br>
 						<div id="letterChooser">
 								Pick Letter:<br />
-							<input type="radio" name="player" value="x" > X<br>
-		  				<input type="radio" name="player" value="o" checked> O<br>
+							<input type="button" name="player" onclick="playerChoice('x')" value="x" > X<br>
+		  				<input type="button" name="player" onclick="playerChoice('o')" value="o" > O<br>
 						</div>
   			Player 2:<br><input type="text" id="player2Name" value="Player2">
 					<br>
@@ -62,7 +62,7 @@
   <header>
     <h1>Tic Tac Toe</h1>
     <p id="message"></p>
-    <a href="#" class="button" id="finish-button">New game</a>
+    <a href="#" class="button" id="finishButton" onclick="restartButton()">New game</a>
   </header>
 </div>
 
