@@ -155,4 +155,12 @@ h1 {
 
 #letterChooser {
   margin-bottom: 10px;
+  display: block;
+}
+
+[name~='player'] {
+  width: 50px;
+  height: 30px;
+  margin-top: 5px;
+  border-radius: 7px;
 }
