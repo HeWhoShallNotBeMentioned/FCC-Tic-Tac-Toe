@@ -87,25 +87,25 @@
     turnCount++;
 
       if (playerTurn === "x" && player1Val === "x") {
-        //console.log('playerTurn === "x" && player1Val === "x"');
+        console.log('playerTurn === "x" && player1Val === "x"');
       document.getElementById("player2").classList.remove("active");
       document.getElementById("player1").classList.add("active");
       square.classList.add("box-filled-x");
     } else if (playerTurn === "x" && player2Val === "x") {
 
-      //console.log('playerTurn === "x" && player2Val === "x")');
-      document.getElementById("player1").classList.remove("active");
-      document.getElementById("player2").classList.add("active");
+      console.log('playerTurn === "x" && player2Val === "x")');
+      document.getElementById("player2").classList.remove("active");
+      document.getElementById("player1").classList.add("active");
       square.classList.add("box-filled-x");
 
     } else if (playerTurn === "o" && player1Val === "o") {
-      //console.log('playerTurn === "o" && player1Val === "o")');
-      document.getElementById("player2").classList.remove("active");
-      document.getElementById("player1").classList.add("active");
+      console.log('playerTurn === "o" && player1Val === "o")');
+      document.getElementById("player1").classList.remove("active");
+      document.getElementById("player2").classList.add("active");
       square.classList.add("box-filled-o");
 
     } else if (playerTurn === "o" && player2Val === "o") {
-      //console.log('playerTurn === "o" && player2Val === "o"');
+      console.log('playerTurn === "o" && player2Val === "o"');
       document.getElementById("player1").classList.remove("active");
       document.getElementById("player2").classList.add("active");
       square.classList.add("box-filled-o");
