@@ -6,7 +6,7 @@
   var playerTurn = "";
   var boardArray1 = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
   var turnCount = 0;
-
+  var square;
   window.turn = turn;
   window.startButton = startButton;
   window.start = start;
@@ -60,6 +60,7 @@
 }
 
 
+
    function init(){
     console.log("inside game.init");
     var hideFinish = document.getElementById('finish');
@@ -69,6 +70,7 @@
   }
 
   function turn (square) {
+
     if (!square.classList.contains("box-filled-o")  && !square.classList.contains("box-filled-x")) {
       //console.log(square);
       switchTurn(square);
@@ -113,6 +115,8 @@
        alert("switchTurn has a problem");
      }
 
+
+
    if (getWinner(playerTurn)){
      console.log('getWinner');
      displayWinner(playerTurn);
@@ -129,9 +133,9 @@
       playerTurn = "x";
     }
     console.log("playerTurn end of switchTurn", playerTurn);
-
-
   }
+
+
 
   function getWinner (turn) {
     console.log("turn inside getWinner", turn);
@@ -220,11 +224,85 @@
       var def = "box-" + j;
       document.getElementById(def).classList.remove("box-filled-x");
       document.getElementById(def).classList.remove("box-filled-o");
+      document.getElementById(def).style.backgroundImage = "none";
     }
-
   }
 
   init();
   playerChoice();
 
+
+  //console.log("square within function ", square);
+    var hoverObj = document.getElementsByClassName("box");
+  //console.log("hoverObj  ", hoverObj);
+
+
+    for (var i = 0; i < hoverObj.length; i++) {
+      hoverObj[i].addEventListener("mouseover", myHover);
+      hoverObj[i].addEventListener("mouseout", myOutHover);
+    }
+
+    function myHover (){
+      //console.log("inside the myHover event listener");
+      //console.log("i  ", i);
+       if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
+         if (playerTurn == "o") {
+          this.style.backgroundImage = "url('./img/o.svg')";
+        } else {
+          this.style.backgroundImage = "url('./img/x.svg')";
+        }
+      }
+    }
+
+    function myOutHover() {
+      console.log("inside the mtOutHover event listener");
+      if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
+       this.style.backgroundImage = "none";
+      }
+     }
+
 }());
+
+
+
+// [].forEach.call(document.querySelectorAll('nav > ul > li a'), function (link) {
+//     link.addEventListener('mouseover', coloringHandler);
+//     link.addEventListener('mouseout', decoloringHandler);
+// });
+//
+// function coloringHandler() {
+//     this.dataset.initialInlineColor = this.style.color;
+//     this.style.color = 'red';
+// }
+//
+// function decoloringHandler() {
+//     this.style.color = this.dataset.initialInlineColor;
+// }
+//
+// //function hover() {
+//   console.log("square within function ", square);
+//     var hoverObj = document.getElementsByClassName("box");
+//   console.log("hoverObj  ", hoverObj);
+//     //hoverObj.onmouseover = function(){};
+//
+//     for (var i = 0; i < hoverObj.length; i++) {
+//       hoverObj[i].addEventListener("mouseover", myHover);
+//       hoverObj[i].addEventListener("mouseout", myOutHover);
+//     }
+//
+//     function myHover (){
+//       console.log("inside the myHover event listener");
+//       console.log("i  ", i);
+//       this.style.backgroundImage = "url('./img/o.svg')";
+//       // if (!hoverObj.hasClass('box-filled-o') && !hoverObj.hasClass('box-filled-x') &&
+//       //   playerTurn == "o") {
+//       //   hoverObj[i].style.backgroundImage = "url('./img/o.svg')";
+//       // }
+//     }
+//
+//     function myOutHover() {
+//       console.log("inside the mtOutHover event listener");
+//     //   console.log("i  ", i);
+//        hoverObj[i].style.backgroundImage = "none";
+//      }
+// //}
