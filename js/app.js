@@ -4,15 +4,21 @@
   var player1Val = "";
   var player2Val = "";
   var playerTurn = "";
-  var boardArray1 = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
+  var boardArray1 = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   var turnCount = 0;
   var square;
+  var numberPlayers;
+  var playerNameGet1 = "";
+  var playerNameGet2 = "";
+  console.log("playerNameGet1  ", playerNameGet1);
+
   window.turn = turn;
   window.startButton = startButton;
   window.start = start;
   window.myForm = myForm;
   window.restartButton = restartButton;
   window.playerChoice = playerChoice;
+  window.playerNumber = playerNumber;
 
   function playerChoice(letter) {
     console.log("letter from player choice", letter);
@@ -23,43 +29,63 @@
     return player1Val;
   }
 
+  function playerNumber(number) {
+    console.log("Number from playerNumber ", number);
+    if (number != 1) {
+      number = 2;
+    } else {
+      number = 1;
+    }
+    numberPlayers = number;
+    return numberPlayers;
+  }
+
    function start () {
 
         var hideBoard = document.getElementById('board');
         hideBoard.style.display = 'block';
         var hideStart = document.getElementById('start');
         hideStart.style.display = 'none';
-
+        console.log("number of players ", numberPlayers);
         console.log("player1Val  ", player1Val);
-        var playerNameGet1 = document.getElementById("player1Name").value;
-        var playerNameGet2 = document.getElementById("player2Name").value;
-        console.log("playerNameGet1  ", playerNameGet1);
+        if (numberPlayers == 2) {
+          playerNameGet1 = document.getElementById("player1Name").value;
+          playerNameGet2 = document.getElementById("player2Name").value;
+          console.log("playerNameGet1  ", playerNameGet1);
+        } else if (numberPlayers == 1) {
+          console.log("inside else if players = 1");
 
-        if (player1Val === "x") {
-          document.getElementById("play1").innerHTML = playerNameGet2;
-          document.getElementById("play2").innerHTML = playerNameGet1;
-          document.getElementById("player2").classList.add("active");
-          playerTurn = "x";
+          playerNameGet1 = document.getElementById("player1Name").value;
+          playerNameGet2 = "Master Control Program(MCP)";
+          console.log("playerNameGet1  ", playerNameGet1);
 
-          player2Val = "o";
-            //console.log("player1Val  ", player1Val);
-            //console.log("player2Val  ", player2Val);
-        } else if (player1Val === "o") {
-          document.getElementById("play1").innerHTML = playerNameGet1;
-          document.getElementById("play2").innerHTML = playerNameGet2;
-          document.getElementById("player1").classList.add("active");
-          playerTurn = "o";
-          //console.log("player1Val  ", player1Val);
-
-          player2Val = "x";
-          //console.log("player2Val  ", player2Val);
         } else {
           alert("not getting the playerVal1");
         }
 
+
+
+
+          if (player1Val === "x") {
+            document.getElementById("play1").innerHTML = playerNameGet2;
+            document.getElementById("play2").innerHTML = playerNameGet1;
+            document.getElementById("player2").classList.add("active");
+            playerTurn = "x";
+
+            player2Val = "o";
+              //console.log("player1Val  ", player1Val);
+              //console.log("player2Val  ", player2Val);
+          } else if (player1Val === "o") {
+            document.getElementById("play1").innerHTML = playerNameGet1;
+            document.getElementById("play2").innerHTML = playerNameGet2;
+            document.getElementById("player1").classList.add("active");
+            playerTurn = "o";
+            //console.log("player1Val  ", player1Val);
+
+            player2Val = "x";
+            //console.log("player2Val  ", player2Val);
+        }
 }
-
-
 
    function init(){
     console.log("inside game.init");
@@ -230,7 +256,7 @@
 
   init();
   playerChoice();
-
+  playerNumber();
 
   //console.log("square within function ", square);
     var hoverObj = document.getElementsByClassName("box");

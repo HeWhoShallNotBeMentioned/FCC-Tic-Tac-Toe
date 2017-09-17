@@ -146,7 +146,7 @@ h1 {
 }
 
 #player2Name {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 #startHeader {
@@ -159,6 +159,18 @@ h1 {
 }
 
 [name~='player'] {
+  width: 50px;
+  height: 30px;
+  margin-top: 5px;
+  border-radius: 7px;
+}
+
+#playerChooser {
+  margin-bottom: 10px;
+  display: block;
+}
+
+[name~='playerNum'] {
   width: 50px;
   height: 30px;
   margin-top: 5px;
