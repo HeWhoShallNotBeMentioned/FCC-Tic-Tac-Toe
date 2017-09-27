@@ -116,6 +116,10 @@
   }
 
   function switchTurn(square) {
+    if(!square)
+    {
+      return;
+    }
     console.log("square inside switchTurn  ", square);
     console.log("inside switchTurn. playerTurn ", playerTurn);
     console.log("inside switchTurn. player1Val ", player1Val);
@@ -151,28 +155,36 @@
          alert("switchTurn has a problem");
      }
 
+
      if(numberPlayers == 1 && player1Val == playerTurn) {
        //console.log("square.id  ", square.id);
-       var squareId = square.id;
-       var boxNum = squareId.slice(-1);
-       //console.log("boxNum", boxNum);
-       boxNum = Number(boxNum);
-       var index = boardArray1.indexOf(boxNum);
-       console.log("squareId, boxNum, index", squareId, boxNum, index);
-       boardArray1.splice(index, 1);
-       console.log("boardArray1 inside switchTurn", boardArray1);
-        //var box = "box-" + boxNum;
-        //square = document.getElementById(box);
+        setTimeout(function() {
+         var squareId = square.id;
+         var boxNum = squareId.slice(-1);
+         //console.log("boxNum", boxNum);
+         boxNum = Number(boxNum);
+         var index = boardArray1.indexOf(boxNum);
+         console.log("squareId, boxNum, index", squareId, boxNum, index);
+         boardArray1.splice(index, 1);
+         console.log("boardArray1 inside switchTurn", boardArray1);
+          //var box = "box-" + boxNum;
+          //square = document.getElementById(box);
+          checkResultOfMove();
+      }, 1000);
      }
-
-
-   if (getWinner(playerTurn)){
-     //console.log('getWinner');
-     displayWinner(playerTurn);
-   }  else if (turnCount >= 9) {
-     //console.log('tie');
-     displayTie();
+     else {
+       checkResultOfMove();
+     }
    }
+
+   function checkResultOfMove() {
+     if (getWinner(playerTurn)){
+       //console.log('getWinner');
+       displayWinner(playerTurn);
+     }  else if (turnCount >= 9) {
+       //console.log('tie');
+       displayTie();
+     }
 
     if (playerTurn == "x") {
 
@@ -190,21 +202,31 @@
         //square.classList.add("box-filled-x");
       }
     }
-
     //console.log("playerTurn end of switchTurn", playerTurn);
   }
 
   function computerPlayer(playerTurn) {
+    if(boardArray1.length == 0)
+    {
+      return;
+    }
+    // 5 6 8
     //console.log("inside computerPlayer", playerTurn);
+    console.log("Array: " + boardArray1);
     var ind = Math.floor(Math.random() * boardArray1.length);
-    var index = boardArray1.indexOf(ind);
-    console.log("ind, index, boardArray1[ind]", ind, index, boardArray1[ind]);
-     boardArray1.splice(index, 1);
-      var def = "box-" + index;
-      //console.log("def ", def);
-
-    console.log("boardArray1 inside computer turn ", boardArray1);
+    console.log("Ind : " + ind);
+    var index = boardArray1[ind]; //.indexOf(ind);
+    console.log("Index: " + index);
+    var def = "box-" + index;
+    console.log("Def: " + def);
     square = document.getElementById(def);
+     boardArray1.splice(ind, 1);
+     console.log("Spliced ind: " + boardArray1);
+     //console.log("ind, index, boardArray1[ind]", ind, index, boardArray1[ind]);
+      //console.log("def ", def);
+    //  console.log("ind, index, boardArray1[ind]", ind, index, boardArray1[ind]);
+    //console.log("boardArray1 inside computer turn ", boardArray1);
+    //square = document.getElementById(def);
     console.log("square inside computerPlayer  ", square);
     return square;
   }
@@ -289,7 +311,9 @@
       var def = "box-" + j;
       document.getElementById(def).classList.remove("box-filled-x");
       document.getElementById(def).classList.remove("box-filled-o");
-      document.getElementById(def).style.backgroundImage = "none";
+      document.getElementById(def).classList.remove("box-unfilled-o");
+      document.getElementById(def).classList.remove("box-unfilled-x");
+      /* document.getElementById(def).style.backgroundImage = "none"; */
     }
   }
 
@@ -312,9 +336,11 @@
       //console.log("i  ", i);
        if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
          if (playerTurn == "o") {
-          this.style.backgroundImage = "url('./img/o.svg')";
+          /* this.style.backgroundImage = "url('./img/o.svg')"; */
+          this.classList.add("box-unfilled-o");
         } else {
-          this.style.backgroundImage = "url('./img/x.svg')";
+          /* this.style.backgroundImage = "url('./img/x.svg')"; */
+          this.classList.add("box-unfilled-x");
         }
       }
     }
@@ -322,7 +348,13 @@
     function myOutHover() {
       console.log("inside the mtOutHover event listener");
       if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
-       this.style.backgroundImage = "none";
+       /* this.style.backgroundImage = "none"; */
+       if(this.classList.contains("box-unfilled-x")) {
+         this.classList.remove("box-unfilled-x");
+       }
+       if(this.classList.contains("box-unfilled-o")) {
+         this.classList.remove("box-unfilled-o");
+       }
       }
      }
 
