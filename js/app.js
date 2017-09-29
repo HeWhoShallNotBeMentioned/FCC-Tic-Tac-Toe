@@ -10,7 +10,7 @@
   var numberPlayers;
   var playerNameGet1 = "";
   var playerNameGet2 = "";
-  //console.log("playerNameGet1  ", playerNameGet1);
+
 
   window.turn = turn;
   window.startButton = startButton;
@@ -21,7 +21,7 @@
   window.playerNumber = playerNumber;
 
   function playerChoice(letter) {
-    //console.log("letter from player choice", letter);
+
     if (letter == undefined) {
       letter = "o";
     }
@@ -30,7 +30,7 @@
   }
 
   function playerNumber(number) {
-    //console.log("Number from playerNumber ", number);
+
     if (number != 1) {
       number = 2;
     } else {
@@ -46,17 +46,14 @@
         hideBoard.style.display = 'block';
         var hideStart = document.getElementById('start');
         hideStart.style.display = 'none';
-        //console.log("number of players ", numberPlayers);
-        //console.log("player1Val  ", player1Val);
+
         if (numberPlayers == 2) {
           playerNameGet1 = document.getElementById("player1Name").value;
           playerNameGet2 = document.getElementById("player2Name").value;
-          //console.log("playerNameGet1  ", playerNameGet1);
+
         } else if (numberPlayers == 1) {
-          //console.log("inside else if players = 1");
           playerNameGet1 = document.getElementById("player1Name").value;
           playerNameGet2 = "Master Control Program(MCP)";
-          //console.log("playerNameGet1  ", playerNameGet1);
 
         } else {
           alert("not getting the playerVal1");
@@ -67,51 +64,45 @@
             document.getElementById("play2").innerHTML = playerNameGet1;
             document.getElementById("player2").classList.add("active");
             playerTurn = "x";
-
             player2Val = "o";
-              //console.log("player1Val  ", player1Val);
-              //console.log("player2Val  ", player2Val);
+
           } else if (player1Val === "o") {
             document.getElementById("play1").innerHTML = playerNameGet1;
             document.getElementById("play2").innerHTML = playerNameGet2;
             document.getElementById("player1").classList.add("active");
             playerTurn = "o";
-            //console.log("player1Val  ", player1Val);
-
             player2Val = "x";
-            //console.log("player2Val  ", player2Val);
         }
 }
 
    function init(){
-    //console.log("inside game.init");
+
     var hideFinish = document.getElementById('finish');
     hideFinish.style.display = 'none';
     var hideBoard = document.getElementById('board');
     hideBoard.style.display = 'none';
   }
 
-  function turn (square) {
-//console.log("turnCount%2 first inside turn", turnCount%2);
-    if (turnCount % 2 == 0) {
+  function turn(square) {
+
+    if (numberPlayers == 1 && turnCount % 2 == 0) {
 
       if (!square.classList.contains("box-filled-o")  && !square.classList.contains("box-filled-x")) {
-        //console.log(square);
+
         switchTurn(square);
       } else {
         alert("Pick another square.");
       }
     } else if (numberPlayers == 1 && turnCount % 2 !== 0) {
-      //console.log("inside switchTurn numberPlayers == 1 and turnCount%2 == 0");
-      //console.log("numberPlayers ", numberPlayers);
-      //console.log("turnCount%2", turnCount%2);
-      //console.log("turnCount", turnCount);
-      //computerPlayer(playerTurn);
-      //console.log("computerPlayer  ", computerPlayer(playerTurn));
-      //console.log("square inside turn if  ", square);
+
       switchTurn(computerPlayer());
+    } else if (numberPlayers == 2) {
+      if (!square.classList.contains("box-filled-o")  && !square.classList.contains("box-filled-x")) {
 
-
+        switchTurn(square);
+      } else {
+        alert("Pick another square.");
+      }
     }
   }
 
@@ -151,58 +142,58 @@
         square.classList.add("box-filled-o");
 
     } else {
-         //console.log('problem');
+
          alert("switchTurn has a problem");
      }
 
 
      if(numberPlayers == 1 && player1Val == playerTurn) {
-       //console.log("square.id  ", square.id);
+
         setTimeout(function() {
          var squareId = square.id;
          var boxNum = squareId.slice(-1);
-         //console.log("boxNum", boxNum);
+
          boxNum = Number(boxNum);
          var index = boardArray1.indexOf(boxNum);
          console.log("squareId, boxNum, index", squareId, boxNum, index);
          boardArray1.splice(index, 1);
          console.log("boardArray1 inside switchTurn", boardArray1);
-          //var box = "box-" + boxNum;
-          //square = document.getElementById(box);
-          checkResultOfMove();
+          checkResultOfMove(turn);
       }, 1000);
      }
      else {
-       checkResultOfMove();
+       console.log("inside else of switchTurn");
+       checkResultOfMove(turn);
      }
    }
 
-   function checkResultOfMove() {
+   function checkResultOfMove(turn) {
+     console.log("inside checkResultOfMove() seeing playerTurn ", playerTurn);
      if (getWinner(playerTurn)){
-       //console.log('getWinner');
+
        displayWinner(playerTurn);
      }  else if (turnCount >= 9) {
-       //console.log('tie');
+
        displayTie();
      }
 
     if (playerTurn == "x") {
 
-      //console.log('change x to o');
+
       playerTurn = "o";
+      turn();
       if(player2Val == "o" && numberPlayers == 1 &&  player2Val == playerTurn){
         turn();
-        //square.classList.add("box-filled-o");
+
       }
     } else if (playerTurn == "o") {
-      //console.log('change o to x');
       playerTurn = "x";
+      turn();
       if(player2Val == "x" && numberPlayers == 1 &&  player2Val == playerTurn){
         turn();
-        //square.classList.add("box-filled-x");
       }
     }
-    //console.log("playerTurn end of switchTurn", playerTurn);
+
   }
 
   function computerPlayer(playerTurn) {
@@ -210,29 +201,16 @@
     {
       return;
     }
-    // 5 6 8
-    //console.log("inside computerPlayer", playerTurn);
-    console.log("Array: " + boardArray1);
+
     var ind = Math.floor(Math.random() * boardArray1.length);
-    console.log("Ind : " + ind);
-    var index = boardArray1[ind]; //.indexOf(ind);
-    console.log("Index: " + index);
+    var index = boardArray1[ind];
     var def = "box-" + index;
-    console.log("Def: " + def);
     square = document.getElementById(def);
-     boardArray1.splice(ind, 1);
-     console.log("Spliced ind: " + boardArray1);
-     //console.log("ind, index, boardArray1[ind]", ind, index, boardArray1[ind]);
-      //console.log("def ", def);
-    //  console.log("ind, index, boardArray1[ind]", ind, index, boardArray1[ind]);
-    //console.log("boardArray1 inside computer turn ", boardArray1);
-    //square = document.getElementById(def);
-    console.log("square inside computerPlayer  ", square);
+    boardArray1.splice(ind, 1);
     return square;
   }
 
   function getWinner (turn) {
-    //console.log("turn inside getWinner", turn);
     var result = false;
     if (checkRow(0, 1, 2, turn) ||
         checkRow(3, 4, 5, turn) ||
@@ -244,25 +222,21 @@
         checkRow(2, 4, 6, turn)
         ) {
       result = true;
-      //console.log("getWinner ", result);
     }
     return result;
   }
 
   function checkRow (a, b, c, turn) {
-    //console.log("inside checkRow & turn ", turn);
 
     var result = false;
     if(getBox(a) == turn && getBox(b) == turn && getBox(c) == turn) {
       result = true;
     }
-    //console.log("checkRow ", result);
+
     return result;
   }
 
   function getBox(number) {
-    //console.log("getBox ", number);
-    //console.log(document.getElementById("box-" + number).classList.contains("box-filled-o"));
     var def = "box-" + number;
     if (document.getElementById(def).classList.contains("box-filled-x")) {
       return "x";
@@ -313,7 +287,7 @@
       document.getElementById(def).classList.remove("box-filled-o");
       document.getElementById(def).classList.remove("box-unfilled-o");
       document.getElementById(def).classList.remove("box-unfilled-x");
-      /* document.getElementById(def).style.backgroundImage = "none"; */
+
     }
   }
 
@@ -321,10 +295,8 @@
   playerChoice();
   playerNumber();
 
-  //console.log("square within function ", square);
-    var hoverObj = document.getElementsByClassName("box");
-  //console.log("hoverObj  ", hoverObj);
 
+    var hoverObj = document.getElementsByClassName("box");
 
     for (var i = 0; i < hoverObj.length; i++) {
       hoverObj[i].addEventListener("mouseover", myHover);
@@ -332,14 +304,10 @@
     }
 
     function myHover (){
-      //console.log("inside the myHover event listener");
-      //console.log("i  ", i);
        if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
          if (playerTurn == "o") {
-          /* this.style.backgroundImage = "url('./img/o.svg')"; */
           this.classList.add("box-unfilled-o");
         } else {
-          /* this.style.backgroundImage = "url('./img/x.svg')"; */
           this.classList.add("box-unfilled-x");
         }
       }
@@ -348,7 +316,6 @@
     function myOutHover() {
       console.log("inside the mtOutHover event listener");
       if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
-       /* this.style.backgroundImage = "none"; */
        if(this.classList.contains("box-unfilled-x")) {
          this.classList.remove("box-unfilled-x");
        }
