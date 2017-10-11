@@ -16,17 +16,17 @@
   				<br>
 						<div id="letterChooser">
 								Pick Letter:<br />
-							<input type="button" name="player" onclick="playerChoice('x')" value="x" > <br>
-		  				<input type="button" name="player" onclick="playerChoice('o')" value="o" > <br>
+							<input type="button" name="player" id="playerChoice1" value="x" > <br>
+		  				<input type="button" name="player" id="playerChoice2" value="o" > <br>
 						</div>
   			Player 2:<br><input type="text" id="player2Name" value="Player2">
 					<br>
 					<div id="playerChooser">
 							Pick # of players:<br />
-						<input type="button" name="playerNum" onclick="playerNumber(1)" value="1" > <br>
-						<input type="button" name="playerNum" onclick="playerNumber(2)" value="2" > <br>
+						<input type="button" name="playerNum" id="playerNumber1" value="1" > <br>
+						<input type="button" name="playerNum" id="playerNumber2" value="2" > <br>
 					</div>
-	    	<a href="#" class="button" type="submit" onclick="start(this)" id="startButton">Start game</a>
+	    	<a href="#" class="button" type="submit" id="startButton">Start game</a>
 			</form>
 	  </header>
 	</div>
@@ -52,22 +52,25 @@
     </ul>
   </header>
   <ul class="boxes">
-    <li class="box" id="box-0" onclick="turn(this)"></li>
-    <li class="box" id="box-1" onclick="turn(this)"></li>
-    <li class="box" id="box-2" onclick="turn(this)"></li>
-    <li class="box" id="box-3" onclick="turn(this)"></li>
-    <li class="box" id="box-4" onclick="turn(this)"></li>
-    <li class="box" id="box-5" onclick="turn(this)"></li>
-    <li class="box" id="box-6" onclick="turn(this)"></li>
-    <li class="box" id="box-7" onclick="turn(this)"></li>
-    <li class="box" id="box-8" onclick="turn(this)"></li>
+    <li class="box" id="box-0" ></li>
+    <li class="box" id="box-1" ></li>
+    <li class="box" id="box-2" ></li>
+    <li class="box" id="box-3" ></li>
+    <li class="box" id="box-4" ></li>
+    <li class="box" id="box-5" ></li>
+    <li class="box" id="box-6" ></li>
+    <li class="box" id="box-7" ></li>
+    <li class="box" id="box-8" ></li>
   </ul>
 </div>
 <div class="screen screen-win" id="finish">
   <header>
     <h1>Tic Tac Toe</h1>
-    <p id="message"></p>
-    <a href="#" class="button" id="finishButton" onclick="restartButton()">New game</a>
+		<div id="winning">
+
+		</div>
+    <span id="message"></span>
+    <a href="#" class="button" id="finishButton" >New game</a>
   </header>
 </div>
 

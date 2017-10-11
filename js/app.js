@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
   "use strict";
 
   var player1Val = "";
@@ -11,37 +11,53 @@
   var playerNameGet1 = "";
   var playerNameGet2 = "";
 
+  document.getElementById("startButton").addEventListener("click", start);
+  document.getElementById("box-0").addEventListener("click",turn);
+  document.getElementById("box-1").addEventListener("click",turn);
+  document.getElementById("box-2").addEventListener("click",turn);
+  document.getElementById("box-3").addEventListener("click",turn);
+  document.getElementById("box-4").addEventListener("click",turn);
+  document.getElementById("box-5").addEventListener("click",turn);
+  document.getElementById("box-6").addEventListener("click",turn);
+  document.getElementById("box-7").addEventListener("click",turn);
+  document.getElementById("box-8").addEventListener("click",turn);
+  document.getElementById("finishButton").addEventListener("click", restartButton);
+  document.getElementById("playerNumber1").addEventListener("click", playerNumber);
+  document.getElementById("playerNumber2").addEventListener("click", playerNumber);
+  document.getElementById("playerChoice1").addEventListener("click", playerChoice);
+  document.getElementById("playerChoice2").addEventListener("click", playerChoice);
 
-  window.turn = turn;
-  window.startButton = startButton;
-  window.start = start;
-  window.myForm = myForm;
-  window.restartButton = restartButton;
-  window.playerChoice = playerChoice;
-  window.playerNumber = playerNumber;
-
-  function playerChoice(letter) {
-
-    if (letter == undefined) {
+  function playerChoice(e) {
+    var letter;
+    if(!e) {
       letter = "o";
+    } else {
+      console.log("playerChoice ", event.target.value);
+      letter = event.target.value;
     }
     player1Val = letter;
     return player1Val;
   }
 
-  function playerNumber(number) {
-
-    if (number != 1) {
+  function playerNumber(e) {
+    //console.log("e ", e);
+    var number;
+    if(!e) {
       number = 2;
-    } else {
-      number = 1;
     }
+    else {
+      console.log("playerNumber ", event.target.value);
+      number = event.target.value;
+    }
+
+    //console.log("e.value ", e.target.value);
+    //console.log("number ", number);
+
     numberPlayers = number;
     return numberPlayers;
   }
 
    function start () {
-
         var hideBoard = document.getElementById('board');
         hideBoard.style.display = 'block';
         var hideStart = document.getElementById('start');
@@ -83,13 +99,16 @@
     hideBoard.style.display = 'none';
   }
 
-  function turn(square) {
+  function turn(e) {
+        e = e;
+//console.log("e inside turn ", e.target.id);
+console.log("e inside turn ", e);
 
     if (numberPlayers == 1 && turnCount % 2 == 0) {
 
-      if (!square.classList.contains("box-filled-o")  && !square.classList.contains("box-filled-x")) {
+      if (!e.target.classList.contains("box-filled-o")  && !e.target.classList.contains("box-filled-x")) {
 
-        switchTurn(square);
+        switchTurn(e);
       } else {
         alert("Pick another square.");
       }
@@ -97,17 +116,19 @@
 
       switchTurn(computerPlayer());
     } else if (numberPlayers == 2) {
-      if (!square.classList.contains("box-filled-o")  && !square.classList.contains("box-filled-x")) {
-
-        switchTurn(square);
+      if (!e.target.classList.contains("box-filled-o")  && !e.target.classList.contains("box-filled-x")) {
+console.log("inside if statement 2 player");
+        switchTurn(e);
       } else {
         alert("Pick another square.");
       }
     }
   }
 
-  function switchTurn(square) {
-    if(!square)
+  function switchTurn(e) {
+    e = e;
+    console.log("inside switchTurn", e);
+    if(!e)
     {
       return;
     }
@@ -121,25 +142,43 @@
         console.log('playerTurn === "x" && player1Val === "x"');
         document.getElementById("player2").classList.remove("active");
         document.getElementById("player1").classList.add("active");
-        square.classList.add("box-filled-x");
+        if (playerNameGet2 == "Master Control Program(MCP)" && numberPlayers == 1 && playerTurn == player2Val){
+          square.classList.add("box-filled-x");
+        } else {
+          e.target.classList.add("box-filled-x");
+        }
     } else if (playerTurn === "x" && player2Val === "x") {
 
         console.log('playerTurn === "x" && player2Val === "x")');
         document.getElementById("player2").classList.remove("active");
         document.getElementById("player1").classList.add("active");
-        square.classList.add("box-filled-x");
+        if (playerNameGet2 == "Master Control Program(MCP)" && numberPlayers == 1 && playerTurn == player2Val){
+          square.classList.add("box-filled-x");
+        } else {
+          e.target.classList.add("box-filled-x");
+        }
+
 
     } else if (playerTurn === "o" && player1Val === "o") {
         console.log('playerTurn === "o" && player1Val === "o")');
         document.getElementById("player1").classList.remove("active");
         document.getElementById("player2").classList.add("active");
-        square.classList.add("box-filled-o");
+        if (playerNameGet2 == "Master Control Program(MCP)" && numberPlayers == 1 && playerTurn == player2Val){
+          square.classList.add("box-filled-o");
+        } else {
+          e.target.classList.add("box-filled-o");
+        }
+
 
     } else if (playerTurn === "o" && player2Val === "o") {
         console.log('playerTurn === "o" && player2Val === "o"');
         document.getElementById("player1").classList.remove("active");
         document.getElementById("player2").classList.add("active");
-        square.classList.add("box-filled-o");
+        if (playerNameGet2 == "Master Control Program(MCP)" && numberPlayers == 1 && playerTurn == player2Val){
+          square.classList.add("box-filled-o");
+        } else {
+          e.target.classList.add("box-filled-o");
+        }
 
     } else {
 
@@ -150,7 +189,7 @@
      if(numberPlayers == 1 && player1Val == playerTurn) {
 
         setTimeout(function() {
-         var squareId = square.id;
+         var squareId = e.target.id;
          var boxNum = squareId.slice(-1);
 
          boxNum = Number(boxNum);
@@ -181,14 +220,14 @@
 
 
       playerTurn = "o";
-      turn();
+
       if(player2Val == "o" && numberPlayers == 1 &&  player2Val == playerTurn){
         turn();
 
       }
     } else if (playerTurn == "o") {
       playerTurn = "x";
-      turn();
+
       if(player2Val == "x" && numberPlayers == 1 &&  player2Val == playerTurn){
         turn();
       }
@@ -246,6 +285,7 @@
   }
 
   function displayWinner (turn) {
+      var winnerName = "";
       console.log("Winner is player " + turn);
       var showFinish = document.getElementById('finish');
       showFinish.style.display = 'block';
@@ -253,8 +293,12 @@
       hideBoard.style.display = 'none';
 
       if (playerTurn == "x") {
+        winnerName = document.getElementById("play2").innerHTML;
+        document.getElementById("winning").innerHTML = '<p>' + winnerName + '<sp>';
         document.getElementById("finish").classList.add("screen-win-x");
       } else if (playerTurn == "o") {
+        winnerName = document.getElementById("play1").innerHTML;
+        document.getElementById("winning").innerHTML = '<p>' + winnerName + '</p>';
         document.getElementById("finish").classList.add("screen-win-o");
       }
   }
@@ -266,6 +310,7 @@
     showFinish.style.display = 'block';
     var hideBoard = document.getElementById('board');
     hideBoard.style.display = 'none';
+    document.getElementById("winning").innerHTML = '<p>Tie</p>';
 
   }
 
@@ -313,6 +358,8 @@
       }
     }
 
+    //document.getElementById("startButton").addEventListener("click", start);
+
     function myOutHover() {
       console.log("inside the mtOutHover event listener");
       if(!this.classList.contains("box-filled-x") && !this.classList.contains("box-filled-o")){
@@ -325,4 +372,4 @@
       }
      }
 
-}());
+}(window));
